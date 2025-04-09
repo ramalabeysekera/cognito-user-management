@@ -13,6 +13,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider/types"
 	"github.com/ramalabeysekera/cognitousermanagement/config"
 	"github.com/ramalabeysekera/cognitousermanagement/pkg/common"
+	"github.com/ramalabeysekera/cognitousermanagement/pkg/helpers"
 	"github.com/ramalabeysekera/cognitousermanagement/pkg/selections"
 	"github.com/spf13/cobra"
 )
@@ -31,7 +32,31 @@ The command uses the AWS SDK for Go (v2) and requires appropriate IAM permission
 		userPool := selections.SelectUserPool(config.AwsConfig)
 		if userPool != "" {
 			permanentpassword, _ := cmd.Flags().GetBool("permanentpassword")
-			createCognitoUser(context.Background(), userPool, permanentpassword)
+			attrs, err := common.DescribeUserSignInAttr(&userPool, config.AwsConfig, context.Background())
+
+			if err != nil{
+				log.Fatal(err)
+			}
+
+			if len(attrs) > 0 {
+				if len(attrs) > 1 {
+					selectedAttr , err := helpers.InteractiveSelection(attrs, "Please select the attribute you would like to use: ")
+					if err != nil{
+						log.Fatal(err)
+					}
+
+					attToFriendlyName := make(map[string](string))
+
+					attToFriendlyName["email"] = "Email"
+					attToFriendlyName["phone_number"] = "Phone Number"
+
+					createCognitoUser(context.Background(), userPool, permanentpassword, attToFriendlyName[selectedAttr])
+				}else{
+					createCognitoUser(context.Background(), userPool, permanentpassword, attrs[0])
+				}
+			}else{
+				createCognitoUser(context.Background(), userPool, permanentpassword, "")
+			}
 		}else{
 			log.Fatal("No user pool ID found")
 		}
@@ -47,7 +72,7 @@ func init() {
 
 
 // createCognitoUser handles the creation of a new user in AWS Cognito
-func createCognitoUser(ctx context.Context, userPoolId string, permpass bool){
+func createCognitoUser(ctx context.Context, userPoolId string, permpass bool, attr string){
 
 	// Initialize Cognito client
 	cogClient := cognitoidentityprovider.NewFromConfig(config.AwsConfig)
@@ -58,8 +83,13 @@ func createCognitoUser(ctx context.Context, userPoolId string, permpass bool){
 	fmt.Println("Attempting to create the user on userPoolId:",userPoolId)
 	fmt.Println("Cancel the operation if this is not intended - Ctrl+C")
 
-	// Get username from user input
-	fmt.Print("Please enter the username: ")
+	if attr != ""{
+		fmt.Printf("Please enter the %v : ", attr)
+	}else{
+		// Get username from user input
+		fmt.Print("Please enter the username: ")
+	}
+
 	userName, err := reader.ReadString('\n')
 	
 	if err != nil{
