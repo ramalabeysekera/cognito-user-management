@@ -11,8 +11,9 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider"
 	"github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider/types"
-	"github.com/ramalabeysekera/cognitousermanagement/pkg/selections"
 	"github.com/ramalabeysekera/cognitousermanagement/config"
+	"github.com/ramalabeysekera/cognitousermanagement/pkg/common"
+	"github.com/ramalabeysekera/cognitousermanagement/pkg/selections"
 	"github.com/spf13/cobra"
 )
 
@@ -23,12 +24,14 @@ var createCmd = &cobra.Command{
 	Short: "This command is used to create a new Cognito User",
 	Long: `The "createUser" command allows you to register a new user in an AWS Cognito User Pool.
 
+Run this command with "--permanentpassword=true" to set a permanant password during the creation
 Ensure your AWS credentials are properly configured before running this command.
 The command uses the AWS SDK for Go (v2) and requires appropriate IAM permissions to access Cognito services`,
 	Run: func(cmd *cobra.Command, args []string) {
 		userPool := selections.SelectUserPool(config.AwsConfig)
 		if userPool != "" {
-			createCognitoUser(context.Background(), userPool)
+			permanentpassword, _ := cmd.Flags().GetBool("permanentpassword")
+			createCognitoUser(context.Background(), userPool, permanentpassword)
 		}else{
 			log.Fatal("No user pool ID found")
 		}
@@ -39,11 +42,12 @@ The command uses the AWS SDK for Go (v2) and requires appropriate IAM permission
 // init adds the create command to the root command
 func init() {
 	rootCmd.AddCommand(createCmd)
+	createCmd.Flags().Bool("permanentpassword", false, "Set password as permanant for the new user")
 }
 
 
 // createCognitoUser handles the creation of a new user in AWS Cognito
-func createCognitoUser(ctx context.Context, userPoolId string){
+func createCognitoUser(ctx context.Context, userPoolId string, permpass bool){
 
 	// Initialize Cognito client
 	cogClient := cognitoidentityprovider.NewFromConfig(config.AwsConfig)
@@ -65,7 +69,7 @@ func createCognitoUser(ctx context.Context, userPoolId string){
 	userName = strings.TrimSpace(userName)
 
 	// Get temporary password from user input
-	fmt.Print(`Please enter the temporary password (Run this app with "setpassword" command to set a permanant password) : `)
+	fmt.Print(`Please enter the temporary password (Run this command with "--permanentpassword=true" to set a permanant password) : `)
 	tempPassword, err := reader.ReadString('\n')
 
 	tempPassword = strings.TrimSpace(tempPassword)
@@ -90,10 +94,44 @@ func createCognitoUser(ctx context.Context, userPoolId string){
 	
 
 	if err != nil {
-		log.Print(err)
+		log.Fatal(err)
 	} else {
-		log.Println("User created successfully") 
-		log.Printf("Username: %s, UserStatus: %s", 
-		*AdminCreateUserOutput.User.Username,
-		AdminCreateUserOutput.User.UserStatus)
-	}}
+		if permpass {
+			log.Println("User created successfully") 
+		}else{
+			log.Println("User created successfully") 
+			log.Printf("Username: %s, UserStatus: %s", 
+			*AdminCreateUserOutput.User.Username,
+			AdminCreateUserOutput.User.UserStatus)
+		}
+	}
+
+	if permpass {
+
+		setPermanentPasswordInput := common.SetPermanentPasswordInput{
+			UserPoolId: userPoolId,
+			Username: userName,
+			Password: tempPassword,
+		}
+
+		err := common.SetPermanentPassword(setPermanentPasswordInput, config.AwsConfig, ctx)
+
+		if err != nil{
+			log.Print(err)
+
+		}else{
+			log.Print("Permanant password set !")
+
+			AdminGetUserOutput, err := common.AdminGetUser(userName, userPoolId, config.AwsConfig, ctx)
+			
+			if err != nil{
+				log.Print(err)
+			}
+
+			log.Printf("Username: %s, UserStatus: %s", 
+			*AdminGetUserOutput.Username,
+			AdminGetUserOutput.UserStatus)
+			
+		}
+	}
+}
