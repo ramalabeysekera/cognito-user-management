@@ -108,13 +108,7 @@ func createCognitoUser(ctx context.Context, userPoolId string, permpass bool){
 
 	if permpass {
 
-		setPermanentPasswordInput := common.SetPermanentPasswordInput{
-			UserPoolId: userPoolId,
-			Username: userName,
-			Password: tempPassword,
-		}
-
-		err := common.SetPermanentPassword(setPermanentPasswordInput, config.AwsConfig, ctx)
+		_, err := common.SetPermanentPassword(userPoolId, userName, tempPassword , config.AwsConfig, ctx)
 
 		if err != nil{
 			log.Print(err)
