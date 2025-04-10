@@ -13,7 +13,7 @@ func GetLocalAwsProfiles() ([]string, error) {
 	// Get the default AWS credentials file path
 	fname := config.DefaultSharedCredentialsFilename()
 	if fname == "" {
-		return nil, errors.New("No AWS configuration found !")
+		return nil, errors.New("no aws configuration found")
 	}
 
 	// Load and parse the credentials file
