@@ -34,10 +34,12 @@ func CreateUser(userPoolId string, userName string, tempPassword string, permpas
 	if err != nil {
 		return err
 	} else {
+		greenColor := "\033[32m"
+		resetColor := "\033[0m"
 		if permpass {
-			log.Println("User created successfully")
+			log.Println(greenColor + "User created successfully" + resetColor)
 		} else {
-			log.Println("User created successfully")
+			log.Println(greenColor + "User created successfully" + resetColor)
 			log.Printf("Username: %s, UserStatus: %s",
 				*AdminCreateUserOutput.User.Username,
 				AdminCreateUserOutput.User.UserStatus)

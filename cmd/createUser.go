@@ -124,7 +124,9 @@ func createCognitoUser(ctx context.Context, userPoolId string, permpass bool, at
 					if err != nil {
 						log.Print(err)
 					} else {
-						log.Print("Permanant password set !")
+						greenColor := "\033[32m"
+						resetColor := "\033[0m"
+						log.Print(greenColor+ "Permanant password set !" +resetColor)
 
 						// Get and display updated user status
 						AdminGetUserOutput, err := common.AdminGetUser(userName, userPoolId, config.AwsConfig, ctx)
@@ -179,8 +181,9 @@ func createCognitoUser(ctx context.Context, userPoolId string, permpass bool, at
 				if err != nil {
 					log.Print(err)
 				} else {
-					log.Print("Permanant password set !")
-
+					greenColor := "\033[32m"
+					resetColor := "\033[0m"
+					log.Print(greenColor+ "Permanant password set !" +resetColor)
 					// Get and display updated user status
 					AdminGetUserOutput, err := common.AdminGetUser(userName, userPoolId, config.AwsConfig, ctx)
 
