@@ -20,28 +20,36 @@ The Cognito User Management CLI is a command-line tool designed to simplify the 
 1. Go to the [GitHub Releases page](https://github.com/ramalabeysekera/cognito-user-management/releases)
 2. Download the appropriate executable for your operating system
 3. Make the file executable (Linux/macOS):
+
     ```bash
     chmod +x cognitousermanagement
     ```
 
 ### Option 2: Build from Source
+
+#### Need Go 1.23 or later
+
 1. Clone the repository:
+
     ```bash
     git clone https://github.com/ramalabeysekera/cognito-user-management.git
     ```
 2. Navigate to the project directory:
+
     ```bash
     cd cognito-user-management
     ```
 3. Build the executable:
+
     ```bash
     go build -o cognitousermanagement
     ```
 
 ## Usage
 Run the CLI tool using the following command:
+
 ```bash
-./cognitousermanagement.exe
+./cognitousermanagement
 ```
 
 ### Commands
@@ -53,8 +61,9 @@ Create a new user in a Cognito User Pool.
 - `--bulk`: Create multiple users from a CSV file.
 
 **Example:**
+
 ```bash
-./cognitousermanagement.exe createuser --permanentpassword=true
+./cognitousermanagement createuser --permanentpassword=true
 ```
 
 #### `root`
@@ -69,10 +78,12 @@ The root command provides an overview of the tool and its functionalities.
 
 ## CSV File Format
 For bulk user creation, the CSV file should have the following format:
+
 ```
 username,password
 ```
 Example:
+
 ```
 john_doe,P@ssw0rd123
 alice_smith,Secur3P@ss!
