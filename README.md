@@ -16,17 +16,27 @@ The Cognito User Management CLI is a command-line tool designed to simplify the 
 - IAM permissions to manage Cognito user pools
 
 ## Installation
+
+### Option 1: Download from GitHub Releases
+1. Go to the [GitHub Releases page](https://github.com/ramalabeysekera/cognito-user-management/releases)
+2. Download the appropriate executable for your operating system
+3. Make the file executable (Linux/macOS):
+    ```bash
+    chmod +x cognitousermanagement
+    ```
+
+### Option 2: Build from Source
 1. Clone the repository:
     ```bash
-    git clone https://github.com/ramalabeysekera/cognitousermanagement.git
+    git clone https://github.com/ramalabeysekera/cognito-user-management.git
     ```
 2. Navigate to the project directory:
     ```bash
-    cd cognitousermanagement
+    cd cognito-user-management
     ```
 3. Build the executable:
     ```bash
-    go build -o cognitousermanagement.exe
+    go build -o cognitousermanagement
     ```
 
 ## Usage
@@ -71,7 +81,7 @@ alice_smith,Secur3P@ss!
 
 ## Contributing
 Found a bug or have a feature request? Please open an issue on GitHub:
-https://github.com/ramalabeysekera/cognitousermanagement/issues
+https://github.com/ramalabeysekera/cognito-user-management/issues
 
 ## License
 This project is unlicensed. See the LICENSE file for details.
