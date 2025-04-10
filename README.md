@@ -11,7 +11,6 @@ The Cognito User Management CLI is a command-line tool designed to simplify the 
 - **Interactive CLI**: User-friendly prompts for seamless interaction.
 
 ## Prerequisites
-- Go 1.23 or later
 - AWS credentials configured in your local environment
 - IAM permissions to manage Cognito user pools
 
