@@ -1,6 +1,5 @@
 /*
 Copyright © 2025 Ramal Abeysekera ramal.abeysekera@hotmail.com
-
 */
 package main
 
