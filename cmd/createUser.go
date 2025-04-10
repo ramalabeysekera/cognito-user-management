@@ -24,6 +24,7 @@ var createCmd = &cobra.Command{
 	Long: `The "createUser" command allows you to register a new user in an AWS Cognito User Pool.
 
 Run this command with "--permanentpassword=true" to set a permanant password during the creation
+Run this command with "--bulk=true" to create multiple users from a CSV file
 Ensure your AWS credentials are properly configured before running this command.
 The command uses the AWS SDK for Go (v2) and requires appropriate IAM permissions to access Cognito services`,
 	// Run defines the main execution logic for the create command
