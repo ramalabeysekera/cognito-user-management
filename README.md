@@ -9,6 +9,7 @@ The Cognito User Management CLI is a command-line tool designed to simplify the 
 - **Bulk User Creation**: Import users from a CSV file and create them in bulk.
 - **AWS Profile Selection**: Choose an AWS profile from your local configuration for authentication.
 - **Interactive CLI**: User-friendly prompts for seamless interaction.
+- **Group Management**: Add users to one or more groups interactively.
 
 ## Prerequisites
 - AWS credentials configured in your local environment
@@ -64,6 +65,18 @@ Create a new user in a Cognito User Pool.
 
 ```bash
 ./cognitousermanagement createuser --permanentpassword=true
+```
+
+#### `addtogroups`
+Add a user to one or more groups in a Cognito User Pool.
+
+**Description:**
+This command allows you to select a user from a Cognito User Pool and add them to one or more groups interactively.
+
+**Example:**
+
+```bash
+./cognitousermanagement addtogroups
 ```
 
 #### `root`
