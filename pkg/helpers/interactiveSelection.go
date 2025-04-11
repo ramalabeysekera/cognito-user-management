@@ -28,6 +28,7 @@ func InteractiveSelection(list []string, label string) (string, error) {
 		Label:     label,
 		Items:     list,
 		Templates: templates,
+		Size:      10, // Number of items to display at once
 		// Define search function for filtering items
 		Searcher: func(input string, index int) bool {
 			item := strings.ToLower(list[index])
