@@ -34,7 +34,7 @@ deleting, and listing users, as well as managing groups and user attributes.
 It is built to streamline user management tasks for developers and administrators 
 working with AWS Cognito.`,
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
-		fmt.Println(banner)
+		fmt.Print(banner)
 	},
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
