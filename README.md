@@ -46,6 +46,13 @@ The Cognito User Management CLI is a command-line tool designed to simplify the 
     go build -o cognitousermanagement
     ```
 
+### Note for GitBash Users
+This CLI tool doesn't work directly on GitBash due to limitations of the promptui library, which is used for selections and interactive prompts. When using GitBash, you need to prefix the command with `winpty`:
+
+```bash
+winpty ./cognitousermanagement
+```
+
 ## Usage
 Run the CLI tool using the following command:
 
@@ -77,6 +84,18 @@ This command allows you to select a user from a Cognito User Pool and add them t
 
 ```bash
 ./cognitousermanagement addtogroups
+```
+
+#### `setpassword`
+Set a new password for an existing user in a Cognito User Pool.
+
+**Description:**
+This command allows you to select a user from a Cognito User Pool and set a new password for them interactively.
+
+**Example:**
+
+```bash
+./cognitousermanagement setpassword
 ```
 
 #### `root`
