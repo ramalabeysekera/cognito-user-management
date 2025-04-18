@@ -98,6 +98,18 @@ This command allows you to select a user from a Cognito User Pool and set a new 
 ./cognitousermanagement setpassword
 ```
 
+#### `deleteuser`
+Delete a user from a Cognito User Pool.
+
+**Description:**
+This command allows you to select a user from a Cognito User Pool and delete them after confirmation.
+
+**Example:**
+
+```bash
+./cognitousermanagement deleteuser
+```
+
 #### `root`
 The root command provides an overview of the tool and its functionalities.
 
