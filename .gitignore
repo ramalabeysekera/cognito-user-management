@@ -16,6 +16,9 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+.vscode/
+build/
+userlist.csv
 
 # Go workspace file
 go.work
