@@ -17,7 +17,7 @@ import (
 //   []string: Updated slice of usernames
 //   []string: Updated slice of temporary passwords
 func ReadUsersFromCsv(userList []string, tempPasswordList []string) ([]string, []string) {
-	
+
 	// Prompt user for input file path
 	fmt.Print("Please enter the file path to read from: ")
 	// Set up input reader for user interaction
@@ -64,7 +64,7 @@ func ReadUsersFromCsv(userList []string, tempPasswordList []string) ([]string, [
 
 	// Process records by appending username and password to respective slices
 	for _, record := range records {
-		userList = append(userList, record[0])        // Add username from first column
+		userList = append(userList, record[0])                 // Add username from first column
 		tempPasswordList = append(tempPasswordList, record[1]) // Add password from second column
 	}
 

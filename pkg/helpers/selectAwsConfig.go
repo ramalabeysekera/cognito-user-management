@@ -15,7 +15,7 @@ func SelectAwsProfile() string {
 	// Get list of AWS profiles from local config
 	profiles, err := GetLocalAwsProfiles()
 
-	if err != nil{
+	if err != nil {
 		log.Print(err)
 	}
 
@@ -29,7 +29,7 @@ func SelectAwsProfile() string {
 			Inactive: "  {{ . | white }}",
 			Selected: "\U0001F525 You chose: {{ . | green }}", // Fire emoji
 		}
-	
+
 		// Configure the selection prompt
 		prompt := promptui.Select{
 			Label:     "Select the AWS profile to use: ",
@@ -43,16 +43,16 @@ func SelectAwsProfile() string {
 			},
 			StartInSearchMode: true,
 		}
-	
+
 		// Run the prompt and get selected profile
 		_, profile, err := prompt.Run()
-	
+
 		if err != nil {
 			log.Print(err)
 		}
-	
+
 		return profile
-	}else{
+	} else {
 		// If only one profile exists, return it directly
 		return profiles[0]
 	}

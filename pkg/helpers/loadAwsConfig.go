@@ -41,7 +41,7 @@ func LoadAwsConfig() aws.Config {
 
 	// Print the configured AWS region
 	fmt.Println("Using region: ", cfg.Region)
-	
+
 	// Create a new STS client using the loaded config
 	client := sts.NewFromConfig(cfg)
 

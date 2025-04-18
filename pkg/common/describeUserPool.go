@@ -34,7 +34,7 @@ func DescribeUserSignInAttr(userPoolId *string, AwsConfig aws.Config, ctx contex
 	DescribeUserPoolOutput, err := cogClient.DescribeUserPool(ctx, &DescribeUserPoolInput)
 
 	// Return error if API call fails
-	if err != nil{
+	if err != nil {
 		return nil, err
 	}
 

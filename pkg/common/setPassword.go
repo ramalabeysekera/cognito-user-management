@@ -12,8 +12,8 @@ import (
 // for a Cognito user. It includes the user pool ID, username and the new password.
 type SetPermanentPasswordInput struct {
 	UserPoolId string // The ID of the Cognito user pool
-	Username string   // The username of the Cognito user
-	Password string   // The new password to be set
+	Username   string // The username of the Cognito user
+	Password   string // The new password to be set
 }
 
 // SetPermanentPassword handles the password setting logic for a Cognito user
@@ -26,7 +26,7 @@ type SetPermanentPasswordInput struct {
 // Returns:
 //   - AdminSetUserPasswordOutput: Response from Cognito API
 //   - error: Any error that occurred during the operation
-func SetPermanentPassword(userPoolId string, username string, password string, AwsConfig aws.Config, ctx context.Context) (cognitoidentityprovider.AdminSetUserPasswordOutput, error){
+func SetPermanentPassword(userPoolId string, username string, password string, AwsConfig aws.Config, ctx context.Context) (cognitoidentityprovider.AdminSetUserPasswordOutput, error) {
 
 	// Initialize Cognito client with AWS configuration
 	cogClient := cognitoidentityprovider.NewFromConfig(AwsConfig)
@@ -41,16 +41,16 @@ func SetPermanentPassword(userPoolId string, username string, password string, A
 		UserPoolId: &userPoolId,
 		Username:   &username,
 		Password:   &password,
-		Permanent:  true, 
+		Permanent:  true,
 	}
 
 	// Call AdminSetUserPassword API to set the new password
-	AdminSetUserPasswordOutput , err := cogClient.AdminSetUserPassword(ctx, &adminSetPasswordInput)
+	AdminSetUserPasswordOutput, err := cogClient.AdminSetUserPassword(ctx, &adminSetPasswordInput)
 
 	// If there's an error, return empty output and the error
 	if err != nil {
 		return cognitoidentityprovider.AdminSetUserPasswordOutput{}, err
-	} 
+	}
 
 	// Return the API response if successful
 	return *AdminSetUserPasswordOutput, nil

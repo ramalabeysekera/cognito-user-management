@@ -14,8 +14,8 @@ func DeleteUser(awsConfig aws.Config, userPoolId string, userName string) error 
 
 	// Prepare user deletion input parameters
 	userInput := cognitoidentityprovider.AdminDeleteUserInput{
-		UserPoolId:        &userPoolId,
-		Username:          &userName,
+		UserPoolId: &userPoolId,
+		Username:   &userName,
 	}
 
 	// Set timeout context for AWS API call
@@ -23,7 +23,7 @@ func DeleteUser(awsConfig aws.Config, userPoolId string, userName string) error 
 	defer cancel()
 
 	// Delete user in Cognito
-	_ , err := cogClient.AdminDeleteUser(ctx, &userInput)
+	_, err := cogClient.AdminDeleteUser(ctx, &userInput)
 
 	if err != nil {
 		return err

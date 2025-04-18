@@ -17,9 +17,9 @@ import (
 func InteractiveSelection(list []string, label string) (string, error) {
 	// Configure the visual templates for the prompt UI
 	templates := &promptui.SelectTemplates{
-		Label:    "{{ . | bold | cyan }}", // Cyan bold text for the label
-		Active:   "\U0001F336 {{ . | cyan | bold }}", // Hot pepper emoji + cyan bold for active selection
-		Inactive: "  {{ . | white }}", // White text for inactive items
+		Label:    "{{ . | bold | cyan }}",                 // Cyan bold text for the label
+		Active:   "\U0001F336 {{ . | cyan | bold }}",      // Hot pepper emoji + cyan bold for active selection
+		Inactive: "  {{ . | white }}",                     // White text for inactive items
 		Selected: "\U0001F525 You chose: {{ . | green }}", // Fire emoji + green text for final selection
 	}
 

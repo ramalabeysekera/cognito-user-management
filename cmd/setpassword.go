@@ -63,7 +63,7 @@ It will:
 			// Remove the newline character from the password input
 			password = strings.TrimSpace(password)
 			// Call AWS Cognito API to set the permanent password for the user
-			_, err = common.SetPermanentPassword(userPool, user, password ,config.AwsConfig, context.Background())
+			_, err = common.SetPermanentPassword(userPool, user, password, config.AwsConfig, context.Background())
 
 			if err != nil {
 				log.Println("Error setting password:", err)
@@ -77,4 +77,3 @@ It will:
 func init() {
 	rootCmd.AddCommand(setpasswordCmd)
 }
-
