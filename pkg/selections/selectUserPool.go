@@ -4,18 +4,17 @@ package selections
 import (
 	"context"
 	"log"
-	"strings"
 	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider"
-	"github.com/manifoldco/promptui"
+	"github.com/ramalabeysekera/cognitousermanagement/pkg/helpers"
 )
 
 // SelectUserPool presents an interactive prompt to select a Cognito User Pool
 // Takes an AWS config and returns the selected User Pool ID as a string
 func SelectUserPool(cfg aws.Config) string {
-
+	// Get all available user pools
 	userPools, err := getAllPools(cfg)
 
 	if err != nil {
@@ -23,45 +22,22 @@ func SelectUserPool(cfg aws.Config) string {
 		return ""
 	}
 
-	if userPools == nil {
+	if len(userPools) == 0 {
 		log.Print("No User Pools found")
 		return ""
 	}
 
-	// Configure display templates for the selection prompt
-	templates := &promptui.SelectTemplates{
-		Label:    "{{ . | bold | cyan }}",
-		Active:   "\U0001F336 {{ . | cyan | bold }}", // Hot pepper emoji
-		Inactive: "  {{ . | white }}",
-		Selected: "\U0001F525 You chose: {{ . | green }}", // Fire emoji
-	}
-
-	// Configure the selection prompt
-	prompt := promptui.Select{
-		Label:     "Select the User Pool: ",
-		Items:     userPools,
-		Templates: templates,
-		Size:      10, // Number of items to display at once
-		// Define search function for filtering results
-		Searcher: func(input string, index int) bool {
-			item := strings.ToLower(userPools[index])
-			input = strings.ToLower(input)
-			return strings.Contains(item, input)
-		},
-		StartInSearchMode: true,
-	}
-
-	// Run the prompt and get selected User Pool ID
-	_, userPoolId, err := prompt.Run()
-
+	// Use our Bubbletea-based selection component
+	userPoolId, err := helpers.InteractiveSelection(userPools, "Select the User Pool:")
 	if err != nil {
 		log.Print(err)
+		return ""
 	}
 
-	// Return the selected User Pool ID
 	return userPoolId
 }
 
+// getAllPools retrieves all user pools from AWS Cognito
 func getAllPools(cfg aws.Config) ([]string, error) {
 	// Create slice to store User Pool IDs
 	var userPools []string
