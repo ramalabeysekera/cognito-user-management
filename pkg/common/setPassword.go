@@ -23,6 +23,7 @@ type SetPermanentPasswordInput struct {
 //   - password: The new password to be set
 //   - AwsConfig: AWS configuration object
 //   - ctx: Context for the operation
+//
 // Returns:
 //   - AdminSetUserPasswordOutput: Response from Cognito API
 //   - error: Any error that occurred during the operation
@@ -31,8 +32,8 @@ func SetPermanentPassword(userPoolId string, username string, password string, A
 	// Initialize Cognito client with AWS configuration
 	cogClient := cognitoidentityprovider.NewFromConfig(AwsConfig)
 
-	// Create context with timeout of 10 seconds to prevent hanging operations
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	// Create a new context with timeout using the provided context
+	ctxWithTimeout, cancel := context.WithTimeout(ctx, 10*time.Second)
 	defer cancel() // Ensure resources are cleaned up when function returns
 
 	// Prepare input for AdminSetUserPassword API call
@@ -45,7 +46,7 @@ func SetPermanentPassword(userPoolId string, username string, password string, A
 	}
 
 	// Call AdminSetUserPassword API to set the new password
-	AdminSetUserPasswordOutput, err := cogClient.AdminSetUserPassword(ctx, &adminSetPasswordInput)
+	AdminSetUserPasswordOutput, err := cogClient.AdminSetUserPassword(ctxWithTimeout, &adminSetPasswordInput)
 
 	// If there's an error, return empty output and the error
 	if err != nil {

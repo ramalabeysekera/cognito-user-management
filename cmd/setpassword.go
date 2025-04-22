@@ -52,6 +52,7 @@ It will:
 				log.Println("Error selecting user:", err)
 				return
 			}
+
 			// Get the password from the user via stdin
 			reader := bufio.NewReader(os.Stdin)
 			fmt.Print("Please enter the new password: ")
@@ -60,10 +61,15 @@ It will:
 				log.Println("Error reading password:", err)
 				return
 			}
+
 			// Remove the newline character from the password input
 			password = strings.TrimSpace(password)
+
+			// Create a context for the operation
+			ctx := context.Background()
+
 			// Call AWS Cognito API to set the permanent password for the user
-			_, err = common.SetPermanentPassword(userPool, user, password, config.AwsConfig, context.Background())
+			_, err = common.SetPermanentPassword(userPool, user, password, config.AwsConfig, ctx)
 
 			if err != nil {
 				log.Println("Error setting password:", err)
