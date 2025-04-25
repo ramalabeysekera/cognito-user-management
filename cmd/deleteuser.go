@@ -78,9 +78,7 @@ Example:
 				log.Println("Error deleting user:", err)
 				return
 			} else {
-				greenColor := "\033[32m"
-				resetColor := "\033[0m"
-				log.Println(greenColor + "User deleted successfully" + resetColor)
+				helpers.PrintSuccessLog(fmt.Sprintf("User %s deleted successfully from pool %s\n", user, userPool))
 			}
 		}
 	},

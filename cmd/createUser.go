@@ -46,7 +46,7 @@ The command uses the AWS SDK for Go (v2) and requires appropriate IAM permission
 			attrs, err := common.DescribeUserSignInAttr(&userPool, config.AwsConfig, context.Background())
 
 			if err != nil {
-				log.Fatal(err)
+				helpers.PrintFatalErrorLog(err.Error())
 			}
 
 			// Handle different attribute configurations
@@ -70,7 +70,7 @@ The command uses the AWS SDK for Go (v2) and requires appropriate IAM permission
 				createCognitoUser(context.Background(), userPool, permanentpassword, "", bulkCreation)
 			}
 		} else {
-			log.Fatal("No user pool ID found")
+			helpers.PrintFatalErrorLog("No user pool ID found")
 		}
 
 	},
@@ -127,9 +127,7 @@ func createCognitoUser(ctx context.Context, userPoolId string, permpass bool, at
 					if err != nil {
 						log.Print(err)
 					} else {
-						greenColor := "\033[32m"
-						resetColor := "\033[0m"
-						log.Print(greenColor + "Permanant password set !" + resetColor)
+						helpers.PrintSuccessLog("Permanant password set !")
 
 						// Get and display updated user status
 						AdminGetUserOutput, err := common.AdminGetUser(userName, userPoolId, config.AwsConfig, ctx)
@@ -172,7 +170,7 @@ func createCognitoUser(ctx context.Context, userPoolId string, permpass bool, at
 		err := common.CreateUser(userPoolId, userName, tempPassword, permpass, config.AwsConfig)
 
 		if err != nil {
-			log.Fatal(err)
+			helpers.PrintFatalErrorLog(err.Error())
 		} else {
 
 			// Handle permanent password setting if requested
@@ -184,9 +182,7 @@ func createCognitoUser(ctx context.Context, userPoolId string, permpass bool, at
 				if err != nil {
 					log.Print(err)
 				} else {
-					greenColor := "\033[32m"
-					resetColor := "\033[0m"
-					log.Print(greenColor + "Permanant password set !" + resetColor)
+					helpers.PrintSuccessLog("Permanant password set !")
 					// Get and display updated user status
 					AdminGetUserOutput, err := common.AdminGetUser(userName, userPoolId, config.AwsConfig, ctx)
 

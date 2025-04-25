@@ -79,9 +79,7 @@ It will:
 				log.Println("Error setting password:", err)
 				return
 			}
-			greenColor := "\033[32m"
-			resetColor := "\033[0m"
-			log.Println(greenColor+ "Password set successfully for user:", user +resetColor)
+			helpers.PrintSuccessLog(fmt.Sprintf("Password set successfully for user %s\n", user))
 		}
 	},
 }

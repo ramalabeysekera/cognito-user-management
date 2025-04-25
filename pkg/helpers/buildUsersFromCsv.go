@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"encoding/csv"
 	"fmt"
-	"log"
 	"os"
 	"strings"
 )
@@ -24,7 +23,7 @@ func ReadUsersFromCsv(userList []string, tempPasswordList []string) ([]string, [
 	reader := bufio.NewReader(os.Stdin)
 	filePath, err := reader.ReadString('\n')
 	if err != nil {
-		log.Fatalf("Error reading input: %v", err)
+		PrintFatalErrorLog(fmt.Sprintf("Error reading input: %v", err))
 	}
 
 	// Remove leading/trailing whitespace from file path
@@ -32,7 +31,7 @@ func ReadUsersFromCsv(userList []string, tempPasswordList []string) ([]string, [
 
 	// Validate that file path is not empty
 	if filePath == "" {
-		log.Fatal("File path cannot be empty.")
+		PrintFatalErrorLog("File path cannot be empty.")
 	}
 
 	// handle file path with " on the start and end
@@ -45,7 +44,7 @@ func ReadUsersFromCsv(userList []string, tempPasswordList []string) ([]string, [
 	// Open the CSV file
 	f, err := os.Open(filePath)
 	if err != nil {
-		log.Fatalf("Error opening file: %v", err)
+		PrintFatalErrorLog(fmt.Sprintf("Error opening file: %v", err))
 	}
 
 	// Ensure file is closed after function completes
@@ -59,7 +58,7 @@ func ReadUsersFromCsv(userList []string, tempPasswordList []string) ([]string, [
 	records, err := r.ReadAll()
 
 	if err != nil {
-		log.Fatalf("Error reading CSV: %v", err)
+		PrintFatalErrorLog(fmt.Sprintf("Error reading CSV: %v", err))
 	}
 
 	// Process records by appending username and password to respective slices
