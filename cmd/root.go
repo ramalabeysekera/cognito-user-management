@@ -19,7 +19,7 @@ const banner = `
 
 Cognito User Management
 Author: Ramal Abeysekera
-Version: 1.3.0
+Version: 1.3.1
 `
 
 // rootCmd represents the base command when called without any subcommands
