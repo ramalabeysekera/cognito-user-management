@@ -13,7 +13,6 @@ import (
 	"github.com/ramalabeysekera/cognitousermanagement/config"
 	"github.com/ramalabeysekera/cognitousermanagement/pkg/common"
 	"github.com/ramalabeysekera/cognitousermanagement/pkg/helpers"
-	"github.com/ramalabeysekera/cognitousermanagement/pkg/selections"
 	"github.com/spf13/cobra"
 )
 
@@ -34,7 +33,13 @@ Example:
   cognitousermanagement deleteuser`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// Get user pool selection from user
-		userPool := selections.SelectUserPool(config.AwsConfig)
+				// Get selected user pool from available pools
+				userPools, err := common.GetAllPools(config.AwsConfig)
+				if err != nil {
+					log.Println("Error fetching user pools:", err)
+					return
+				}
+				userPool := helpers.CallSingleSelect(userPools)
 		if userPool != "" {
 			// Fetch all users from the selected pool
 			users, err := common.GetUsersFromPool(userPool, config.AwsConfig)
@@ -47,12 +52,9 @@ Example:
 				log.Println("No users found in the selected user pool.")
 				return
 			}
+			fmt.Println("Select a user to delete:")
 			// Display interactive user selection prompt
-			user, err := helpers.InteractiveSelection(users, "Please enter the username of the user: ")
-			if err != nil {
-				log.Println("Error selecting user:", err)
-				return
-			}
+			user := helpers.CallSingleSelect(users)
 
 			// Confirm deletion with user
 			fmt.Print("Are you sure you want to delete this user? (y/n): ")

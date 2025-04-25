@@ -4,12 +4,12 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/ramalabeysekera/cognitousermanagement/config"
 	"github.com/ramalabeysekera/cognitousermanagement/pkg/common"
 	"github.com/ramalabeysekera/cognitousermanagement/pkg/helpers"
-	"github.com/ramalabeysekera/cognitousermanagement/pkg/selections"
 	"github.com/spf13/cobra"
 )
 
@@ -22,7 +22,12 @@ and add them to one or more groups interactively. This command simplifies group
 management by providing an intuitive CLI interface for selecting users and groups.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// Get selected user pool from available pools
-		userPool := selections.SelectUserPool(config.AwsConfig)
+		userPools, err := common.GetAllPools(config.AwsConfig)
+		if err != nil {
+			log.Println("Error fetching user pools:", err)
+			return
+		}
+		userPool := helpers.CallSingleSelect(userPools)
 		if userPool != "" {
 			users, err := common.GetUsersFromPool(userPool, config.AwsConfig)
 			if err != nil {
@@ -36,11 +41,8 @@ management by providing an intuitive CLI interface for selecting users and group
 			// Let user select a user
 			// Use the interactive selection function to let the user choose a user
 			// This function will display the list of users and allow the user to select one
-			user, err := helpers.InteractiveSelection(users, "Please enter the username of the user you would like to add to a group: ")
-			if err != nil {
-				log.Println("Error selecting user:", err)
-				return
-			}
+			user := helpers.CallSingleSelect(users)
+
 			groups, err := common.GetGroupsFromPool(userPool, config.AwsConfig)
 			if err != nil {
 				log.Println("Error fetching groups:", err)
@@ -50,8 +52,9 @@ management by providing an intuitive CLI interface for selecting users and group
 				log.Println("No groups found in the selected user pool.")
 				return
 			}
+			fmt.Println("Select groups to add the user to:")
 			// Let user select a group
-			selectedGroups, err := helpers.InteractiveMultiSelect("Please select the groups you would like to add the user to: ", groups)
+			selectedGroups := helpers.CallMultiSelect(groups)
 			if err != nil {
 				log.Println("Error selecting group:", err)
 				return
