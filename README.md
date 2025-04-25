@@ -46,6 +46,29 @@ The Cognito User Management CLI is a command-line tool designed to simplify the 
     go build -o cognitousermanagement
     ```
 
+### Option 3: Using the Makefile
+
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/ramalabeysekera/cognito-user-management.git
+    ```
+2. Navigate to the project directory:
+
+    ```bash
+    cd cognito-user-management
+    ```
+3. Use the Makefile to build the project:
+
+    ```bash
+    make build
+    ```
+
+   Other available make commands:
+   - `make run`: Build and run the application
+   - `make clean`: Remove build artifacts
+   - `make test`: Run tests
+
 ### Note for GitBash Users
 This CLI tool doesn't work directly on GitBash. When using GitBash, you need to prefix the command with `winpty`:
 
