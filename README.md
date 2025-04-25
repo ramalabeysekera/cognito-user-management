@@ -47,7 +47,7 @@ The Cognito User Management CLI is a command-line tool designed to simplify the 
     ```
 
 ### Note for GitBash Users
-This CLI tool doesn't work directly on GitBash due to limitations of the promptui library, which is used for selections and interactive prompts. When using GitBash, you need to prefix the command with `winpty`:
+This CLI tool doesn't work directly on GitBash. When using GitBash, you need to prefix the command with `winpty`:
 
 ```bash
 winpty ./cognitousermanagement
