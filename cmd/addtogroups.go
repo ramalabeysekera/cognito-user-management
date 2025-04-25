@@ -70,12 +70,10 @@ management by providing an intuitive CLI interface for selecting users and group
 					log.Println("Error adding user to group:", err)
 					return
 				}
-				greenColor := "\033[32m"
-				resetColor := "\033[0m"
-				log.Printf(greenColor+"User %s added to group %s\n", user, group+resetColor)
+				helpers.PrintSuccessLog(fmt.Sprintf("User %s added to group %s\n", user, group))
 			}
 		} else {
-			log.Fatal("No user pool selected")
+			helpers.PrintFatalErrorLog("No user pool selected")
 		}
 
 	},

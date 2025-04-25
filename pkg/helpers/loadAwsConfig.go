@@ -4,11 +4,11 @@ package helpers
 import (
 	"context"
 	"fmt"
-	"log"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/sts"
+	
 )
 
 // LoadAwsConfig loads and returns an AWS configuration based on the selected profile.
@@ -25,7 +25,7 @@ func LoadAwsConfig() aws.Config {
 
 	// Validate that a profile was selected
 	if profile == "" {
-		log.Fatal("Need a profile to continue")
+		PrintFatalErrorLog("Need a profile to continue")
 	}
 
 	// Load AWS configuration from default config sources

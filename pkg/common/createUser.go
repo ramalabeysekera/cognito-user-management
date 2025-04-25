@@ -8,6 +8,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider"
 	"github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider/types"
+	"github.com/ramalabeysekera/cognitousermanagement/pkg/helpers"
 )
 
 func CreateUser(userPoolId string, userName string, tempPassword string, permpass bool, AwsConfig aws.Config) error {
@@ -34,12 +35,10 @@ func CreateUser(userPoolId string, userName string, tempPassword string, permpas
 	if err != nil {
 		return err
 	} else {
-		greenColor := "\033[32m"
-		resetColor := "\033[0m"
 		if permpass {
-			log.Println(greenColor + "User created successfully" + resetColor)
+			helpers.PrintSuccessLog("User created successfully with permanent password")
 		} else {
-			log.Println(greenColor + "User created successfully" + resetColor)
+			helpers.PrintSuccessLog("User created successfully with temporary password")
 			log.Printf("Username: %s, UserStatus: %s",
 				*AdminCreateUserOutput.User.Username,
 				AdminCreateUserOutput.User.UserStatus)
