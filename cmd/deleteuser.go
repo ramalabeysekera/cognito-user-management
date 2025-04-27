@@ -52,12 +52,19 @@ Example:
 				log.Println("No users found in the selected user pool.")
 				return
 			}
-			fmt.Println("Select a user to delete:")
+			fmt.Println("Select a users to delete:")
 			// Display interactive user selection prompt
-			user := helpers.CallSingleSelect(users)
+			usersToBeDeleted := helpers.CallMultiSelect(users)
 
+			if len(usersToBeDeleted) == 0 {
+				log.Println("No users selected for deletion.")
+				return
+			}
+
+			for i := range usersToBeDeleted {
+				user := usersToBeDeleted[i]
 			// Confirm deletion with user
-			fmt.Print("Are you sure you want to delete this user? (y/n): ")
+			fmt.Printf("Are you sure you want to delete user %v (y/n): ", user)
 			reader := bufio.NewReader(os.Stdin)
 			confirmation, err := reader.ReadString('\n')
 			if err != nil {
@@ -67,7 +74,7 @@ Example:
 			confirmation = strings.TrimSpace(confirmation)
 			confirmation = strings.ToLower(confirmation)
 			if confirmation != "y" {
-				log.Println("User deletion cancelled.")
+				helpers.PrintWarningErrorLog(fmt.Sprintf("User %s deletion cancelled.\n", user))
 				return
 			}
 
@@ -80,6 +87,8 @@ Example:
 			} else {
 				helpers.PrintSuccessLog(fmt.Sprintf("User %s deleted successfully from pool %s\n", user, userPool))
 			}
+		}
+			
 		}
 	},
 }
