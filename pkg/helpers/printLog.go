@@ -14,3 +14,8 @@ func PrintFatalErrorLog(message string) {
 	red := color.New(color.FgRed).SprintFunc()
 	log.Fatal(red(message))
 }
+
+func PrintWarningErrorLog(message string) {
+	red := color.New(color.FgRed).SprintFunc()
+	log.Print(red(message))
+}
