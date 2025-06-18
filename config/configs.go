@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
-	"github.com/ramalabeysekera/cognitousermanagement/pkg/helpers"
+	"github.com/ramalabeysekera/cognito-user-management/pkg/helpers"
 )
 
 // AwsConfig holds the AWS configuration settings

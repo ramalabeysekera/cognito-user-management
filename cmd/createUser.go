@@ -9,9 +9,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/ramalabeysekera/cognitousermanagement/config"
-	"github.com/ramalabeysekera/cognitousermanagement/pkg/common"
-	"github.com/ramalabeysekera/cognitousermanagement/pkg/helpers"
+	"github.com/ramalabeysekera/cognito-user-management/config"
+	"github.com/ramalabeysekera/cognito-user-management/pkg/common"
+	"github.com/ramalabeysekera/cognito-user-management/pkg/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -30,12 +30,12 @@ The command uses the AWS SDK for Go (v2) and requires appropriate IAM permission
 	Run: func(cmd *cobra.Command, args []string) {
 		// Get selected user pool from available pools
 		fmt.Println("Select a user pool you want to create the user in:")
-				// Get selected user pool from available pools
-				userPools, err := common.GetAllPools(config.AwsConfig)
-				if err != nil {
-					log.Println("Error fetching user pools:", err)
-					return
-				}
+		// Get selected user pool from available pools
+		userPools, err := common.GetAllPools(config.AwsConfig)
+		if err != nil {
+			log.Println("Error fetching user pools:", err)
+			return
+		}
 		userPool := helpers.CallSingleSelect(userPools)
 		if userPool != "" {
 			// Check if permanent password flag is set

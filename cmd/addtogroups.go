@@ -7,9 +7,9 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/ramalabeysekera/cognitousermanagement/config"
-	"github.com/ramalabeysekera/cognitousermanagement/pkg/common"
-	"github.com/ramalabeysekera/cognitousermanagement/pkg/helpers"
+	"github.com/ramalabeysekera/cognito-user-management/config"
+	"github.com/ramalabeysekera/cognito-user-management/pkg/common"
+	"github.com/ramalabeysekera/cognito-user-management/pkg/helpers"
 	"github.com/spf13/cobra"
 )
 

@@ -8,7 +8,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider"
 	"github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider/types"
-	"github.com/ramalabeysekera/cognitousermanagement/pkg/helpers"
+	"github.com/ramalabeysekera/cognito-user-management/pkg/helpers"
 )
 
 func CreateUser(userPoolId string, userName string, tempPassword string, permpass bool, AwsConfig aws.Config) error {

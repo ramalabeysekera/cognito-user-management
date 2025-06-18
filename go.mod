@@ -1,4 +1,4 @@
-module github.com/ramalabeysekera/cognitousermanagement
+module github.com/ramalabeysekera/cognito-user-management
 
 go 1.23.0
 
@@ -8,6 +8,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.51.4
 	github.com/aws/aws-sdk-go-v2/service/sts v1.33.18
 	github.com/charmbracelet/bubbletea v1.3.4
+	github.com/fatih/color v1.18.0
 	github.com/spf13/cobra v1.9.1
 	gopkg.in/ini.v1 v1.67.0
 )
@@ -28,7 +29,6 @@ require (
 	github.com/charmbracelet/x/ansi v0.8.0 // indirect
 	github.com/charmbracelet/x/term v0.2.1 // indirect
 	github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f // indirect
-	github.com/fatih/color v1.18.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/lucasb-eyer/go-colorful v1.2.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect

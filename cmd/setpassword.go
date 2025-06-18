@@ -11,9 +11,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/ramalabeysekera/cognitousermanagement/config"
-	"github.com/ramalabeysekera/cognitousermanagement/pkg/common"
-	"github.com/ramalabeysekera/cognitousermanagement/pkg/helpers"
+	"github.com/ramalabeysekera/cognito-user-management/config"
+	"github.com/ramalabeysekera/cognito-user-management/pkg/common"
+	"github.com/ramalabeysekera/cognito-user-management/pkg/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -32,13 +32,13 @@ It will:
 	Run: func(cmd *cobra.Command, args []string) {
 
 		// Get selected user pool from available pools by displaying interactive selection
-				// Get selected user pool from available pools
-				userPools, err := common.GetAllPools(config.AwsConfig)
-				if err != nil {
-					log.Println("Error fetching user pools:", err)
-					return
-				}
-				userPool := helpers.CallSingleSelect(userPools)
+		// Get selected user pool from available pools
+		userPools, err := common.GetAllPools(config.AwsConfig)
+		if err != nil {
+			log.Println("Error fetching user pools:", err)
+			return
+		}
+		userPool := helpers.CallSingleSelect(userPools)
 		if userPool != "" {
 			// Fetch all users from the selected pool
 			users, err := common.GetUsersFromPool(userPool, config.AwsConfig)
@@ -53,9 +53,8 @@ It will:
 			}
 			fmt.Println("Select a user to set a permanent password:")
 			// Display interactive user selection prompt
-      
-			user := helpers.CallSingleSelect(users)
 
+			user := helpers.CallSingleSelect(users)
 
 			// Get the password from the user via stdin
 			reader := bufio.NewReader(os.Stdin)
