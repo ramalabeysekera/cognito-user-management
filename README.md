@@ -159,9 +159,3 @@ alice_smith,Secur3P@ss!
 ## Contributing
 Found a bug or have a feature request? Please open an issue on GitHub:
 https://github.com/ramalabeysekera/cognito-user-management/issues
-
-## License
-This project is unlicensed. See the LICENSE file for details.
-
-## Author
-Ramal Abeysekera
